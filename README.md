@@ -4,8 +4,8 @@ This repository contains a collection of small Bash scripts that I’ve written 
 
 ## Scripts
 
-### Git Repository Updater
-A Bash script that automates updating multiple Git repositories at once.
+### Godot Project Git Repository Updater
+A Bash script that automates updating the Git repos for multiple Godot Projects.
 
 ### Oracle Database Auto-Connector
 A script that automatically connects to an Oracle Database server and prints its IP address.
