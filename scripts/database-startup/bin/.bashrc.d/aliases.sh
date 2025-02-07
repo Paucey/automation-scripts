@@ -1,0 +1,1 @@
+alias startdb="~/start_database.sh"
