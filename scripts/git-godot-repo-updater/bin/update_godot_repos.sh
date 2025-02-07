@@ -7,21 +7,23 @@ echo -e "Clearing safe directory list...\n"
 git config --global --unset-all safe.directory
 
 # Get the working directory and add essential directories to safe.list
-if [[ "$(pwd)" =~ ^[A-Za-z]:\\ ]]; then
-    # Get the drive letter for Windows paths and avoid leading '/'
-    working_directory=$(pwd -W | sed 's/^\([A-Z]\):.*/\1:/')
+if [[ "$(pwd)" =~ ^/mnt/[a-z]/ ]]; then
+    # For WSL, convert the Linux-style path to Windows-style
+    working_directory=$(pwd -W | sed 's/^\/mnt\/\([a-z]\)/\1:/')
 else
-    # For Linux or macOS paths, just get the parent directory
-    working_directory=$(dirname "$(pwd)")
+    # For non-WSL or Linux/macOS, use the regular path
+    working_directory=$(pwd)
 fi
+echo "Working Directory: $working_directory"  # Debug output
 
-# Add safe directories
+# Add relevant directories to safe.directory
 git config --global --add safe.directory "$working_directory"
-git config --global --add safe.directory "$working_directory/Godot"
-git config --global --add safe.directory "$working_directory/Godot/Projects"
+git config --global --add safe.directory "$working_directory/Godot/"
+git config --global --add safe.directory "$working_directory/Godot/Projects/"
 
 # Iterate over all directories in the Godot/Projects directory
 for dir in "$working_directory/Godot/Projects/"*; do
+    # echo "Checking directory: $dir"  # Debug output
     if [ -d "$dir" ]; then
         echo -e "Git repository found in: $dir"
         echo -e "Adding $dir to the safe directory list.\n"
@@ -56,6 +58,8 @@ for dir in "$working_directory/Godot/Projects/"*; do
 
         # Return to the original directory
         popd > /dev/null
+    else
+        # echo "No Git repository found in: $dir"  # Debug output
     fi
 done
 
