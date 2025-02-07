@@ -14,7 +14,8 @@ else
     # For non-WSL or Linux/macOS, use the regular path
     working_directory=$(pwd)
 fi
-echo "Working Directory: $working_directory"  # Debug output
+
+# echo "Working Directory: $working_directory"  # Debug output
 
 # Add relevant directories to safe.directory
 git config --global --add safe.directory "$working_directory"
@@ -24,7 +25,7 @@ git config --global --add safe.directory "$working_directory/Godot/Projects/"
 # Iterate over all directories in the Godot/Projects directory
 for dir in "$working_directory/Godot/Projects/"*; do
     # echo "Checking directory: $dir"  # Debug output
-    if [ -d "$dir" ]; then
+    if [ -d "$dir/.git" ]; then
         echo -e "Git repository found in: $dir"
         echo -e "Adding $dir to the safe directory list.\n"
         
@@ -39,6 +40,13 @@ for dir in "$working_directory/Godot/Projects/"*; do
 
         echo "Checking for updates on the remote repository..."
         git fetch
+		
+		# Check if fetch was successful (authentication failure check)
+        if [ $? -ne 0 ]; then
+            echo "Authentication failed for repository: $dir."
+            popd > /dev/null
+            continue
+        fi
 
         UPSTREAM=${1:-'@{u}'}
         LOCAL=$(git rev-parse @)
@@ -58,8 +66,8 @@ for dir in "$working_directory/Godot/Projects/"*; do
 
         # Return to the original directory
         popd > /dev/null
-    else
-        # echo "No Git repository found in: $dir"  # Debug output
+    # else                                         # Debug output
+    #     echo "No Git repository found in: $dir"  # Debug output
     fi
 done
 
