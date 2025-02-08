@@ -21,8 +21,5 @@ Additionally, the repository contains a `.bashrc.d` directory with an alias scri
 - Upon opening a new session in Oracle Linux, if your shell automatically scans the `/.bashrc.d` directory for files, the alias will be created automatically, and you can use the startdb command to run the script.
   - If your shell **doesn't** automatically scan the `/.bashrc.d` directory for files, manually copy the alias setup script into your profile's `~/.bashrc` file.
 
-## License:
-This project is licensed under the MIT License.
-
 ## Feedback/Questions:
 If you have any questions or suggestions for improvement, feel free to open an issue in this repo. I’d be happy to help!
