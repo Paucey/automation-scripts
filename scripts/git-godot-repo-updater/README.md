@@ -27,9 +27,6 @@ This Bash script automates the process of checking and updating all Git reposito
 - Run the script:
   - `update_godot_repos.sh`
 
-## License:
-This project is licensed under the MIT License.
-
 ## Feedback/Questions:
 If you have any questions or suggestions for improvement, feel free to open an issue in this repo. I’d be happy to help!
 
